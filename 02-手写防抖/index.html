@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- <script src="./01-debounce基础版.js"></script> -->
+    <!-- <script src="./03-debounce进阶版(取消执行).js"></script> -->
+    <script src="./04-debounce进阶版(返回值).js"></script>
+    <script src="https://unpkg.com/underscore@1.13.2/underscore-umd-min.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <input class="test-debounce" type="text" />
+      <button>取消</button>
+    </div>
+
+    <script>
+      const inputEl = document.querySelector('.test-debounce')
+      const btnEl = document.querySelector('button')
+      let count = 0
+      const handleInput = function (event) {
+        console.log('发送了第' + ++count + '次网络请求', this, event)
+        return '返回值测试'
+      }
+
+      // underscore的防抖
+      // const handleInputDebounce = _.debounce(handleInput, 1000)
+
+      // 自己手写的防抖
+      const handleInputDebounce = debounce(handleInput, 300, false, res => {
+        console.log('自己函数的返回值：', res)
+      })
+
+      const resultCallback = () => {
+        handleInputDebounce().then(res => {
+          console.log(res)
+        })
+      }
+      inputEl.oninput = resultCallback
+
+      btnEl.addEventListener('click', () => {
+        handleInputDebounce.cancel()
+      })
+    </script>
+  </body>
+</html>
