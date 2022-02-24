@@ -5,30 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="./01-throttle基础版.js"></script>
+    <!-- <script src="./01-throttle基础版.js"></script> -->
+    <!-- <script src="./02-throttle升级版(leading实现).js"></script> -->
+    <!-- <script src="./03-throttle升级版(trailing实现).js"></script> -->
+    <!-- <script src="./04-throttle升级版(this和参数).js"></script> -->
+    <!-- <script src="./05-throttle升级版(取消执行).js"></script> -->
+    <script src="./06-throttle终极版(参数返回).js"></script>
     <script src="https://unpkg.com/underscore@1.13.2/underscore-umd-min.js"></script>
   </head>
   <body>
     <div>
       <input class="test-debounce" type="text" />
-      <button>取消</button>
+      <button id="cancel">取消</button>
     </div>
 
     <script>
       const inputEl = document.querySelector('.test-debounce')
-      const btnEl = document.querySelector('button')
+      const btnEl = document.querySelector('#cancel')
 
       let count = 0
       const handleInput = function (event) {
         console.log('发送了第' + ++count + '次网络请求', this, event)
+        return '11111111'
       }
 
       // underscore 节流
-      // const handleInputThrottle = _.throttle(handleInput, 1000)
+      // const handleInputThrottle = _.throttle(handleInput, 1000, {
+      //   leading: false,
+      //   trailing: true
+      // })
 
       // 自己的节流
       const handleInputThrottle = throttle(handleInput, 1000)
-      inputEl.oninput = handleInputThrottle
+
+      const tempCallback = function (...arg) {
+        handleInputThrottle.apply(this, arg).then(res => {
+          console.log('promise返回值：', res)
+        })
+      }
+
+      inputEl.oninput = tempCallback
+      btnEl.onclick = handleInputThrottle.cancel
     </script>
   </body>
 </html>
