@@ -13,3 +13,18 @@
 3. **手写节流**
 
 4. **`[,,,,,]`** 的长度是多少？
+
+5. **下面程序执行结果为？:**
+
+```js
+var arr = []
+for (var i = 0; i < 6; i++) {
+  arr.push(function () {
+    return i
+  })
+}
+
+arr.forEach(function (func) {
+  console.log(func())
+})
+```
