@@ -28,3 +28,5 @@ arr.forEach(function (func) {
   console.log(func())
 })
 ```
+
+6. **使用 js 写一个方法生成从 a-z 的数组。**
