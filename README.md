@@ -40,3 +40,5 @@ arr.forEach(function (func) {
 10. **使用 js 写个方法检测用户在 5 分钟内无任何操作则退出登录**
 
 11. **使用 websocket 制作一个简易的聊天系统**
+
+12. **实现 mvvm**
